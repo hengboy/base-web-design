@@ -10,9 +10,16 @@ import {
   Layers,
   Menu,
   Box,
-  Puzzle,
   BarChart3,
   MessageSquare,
+  CalendarDays,
+  Terminal,
+  PanelRight,
+  KeyRound,
+  Images,
+  ListOrdered,
+  Clock,
+  FolderTree,
 } from 'lucide-react'
 
 const navItems = [
@@ -28,7 +35,14 @@ const navItems = [
 ]
 
 const newNavItems = [
-  { title: 'New Components', path: '/components', icon: Puzzle },
+  { title: 'Calendar', path: '/calendar', icon: CalendarDays },
+  { title: 'Command', path: '/command', icon: Terminal },
+  { title: 'Drawer', path: '/drawer', icon: PanelRight },
+  { title: 'Input OTP', path: '/input-otp', icon: KeyRound },
+  { title: 'Carousel', path: '/carousel', icon: Images },
+  { title: 'Stepper', path: '/stepper', icon: ListOrdered },
+  { title: 'Timeline', path: '/timeline', icon: Clock },
+  { title: 'Tree', path: '/tree', icon: FolderTree },
   { title: 'Charts', path: '/charts', icon: BarChart3 },
   { title: 'AI Chat', path: '/ai-chat', icon: MessageSquare },
 ]
@@ -37,7 +51,7 @@ export function AppSidebar() {
   return (
     <aside className="hidden md:flex w-64 flex-col border-r border-border bg-sidebar h-screen">
       <div className="p-6 border-b border-border">
-        <h1 className="text-lg font-bold tracking-tight">ReUI Framework</h1>
+        <h1 className="text-lg font-bold tracking-tight">Base Web</h1>
         <p className="text-sm text-muted-foreground mt-1">组件演示</p>
       </div>
       <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
