@@ -10,8 +10,11 @@ import { NavigationPage } from '@/pages/NavigationPage'
 import { DataDisplayPage } from '@/pages/DataDisplayPage'
 import { OverlaysPage } from '@/pages/OverlaysPage'
 import { MenusPage } from '@/pages/MenusPage'
-import { Toaster } from '@/components/ui/sonner'
 import { LayoutPage } from '@/pages/LayoutPage'
+import { ComponentsPage } from '@/pages/ComponentsPage'
+import { ChartsPage } from '@/pages/ChartsPage'
+import { AIChatPage } from '@/pages/AIChatPage'
+import { Toaster } from '@/components/ui/sonner'
 
 export default function App() {
   return (
@@ -29,6 +32,9 @@ export default function App() {
               <Route path="/overlays" element={<OverlaysPage />} />
               <Route path="/menus" element={<MenusPage />} />
               <Route path="/layout" element={<LayoutPage />} />
+              <Route path="/components" element={<ComponentsPage />} />
+              <Route path="/charts" element={<ChartsPage />} />
+              <Route path="/ai-chat" element={<AIChatPage />} />
             </Route>
           </Routes>
           <Toaster />
