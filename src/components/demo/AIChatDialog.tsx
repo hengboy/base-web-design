@@ -218,26 +218,24 @@ export function AIChatDialog({ className }: AIChatDialogProps) {
 
       {/* Input */}
       <div className="border-t bg-background p-4">
-        <div className="flex gap-3 items-end">
-          <div className="relative flex-1">
-            <Textarea
-              ref={textareaRef}
-              placeholder="输入消息... (Enter 发送，Shift+Enter 换行)"
-              value={input}
-              onChange={handleInput}
-              onKeyDown={handleKeyDown}
-              disabled={isTyping}
-              className="min-h-[48px] max-h-[120px] resize-none rounded-xl pr-12 py-3 text-sm"
-              rows={1}
-            />
-          </div>
+        <div className="relative">
+          <Textarea
+            ref={textareaRef}
+            placeholder="输入消息... (Enter 发送，Shift+Enter 换行)"
+            value={input}
+            onChange={handleInput}
+            onKeyDown={handleKeyDown}
+            disabled={isTyping}
+            className="min-h-[96px] max-h-[120px] resize-none rounded-xl pr-14 py-3 text-sm"
+            rows={1}
+          />
           <Button
             onClick={handleSend}
             disabled={!input.trim() || isTyping}
             size="icon"
-            className="size-12 shrink-0 rounded-xl"
+            className="absolute bottom-2 right-2 size-9 rounded-lg"
           >
-            <Send className="size-5" />
+            <Send className="size-4" />
           </Button>
         </div>
         <p className="mt-2 text-center text-[11px] text-muted-foreground/50">
