@@ -151,7 +151,7 @@ function SidebarGroupLabel({ title }: { title: string }) {
 
 export function AppSidebar() {
   return (
-    <aside className="hidden h-screen w-64 flex-col border-r border-border bg-sidebar md:flex">
+    <aside className="hidden min-h-screen w-64 flex-col self-stretch border-r border-border bg-sidebar md:flex">
       <div className="flex h-14 items-center border-b border-border px-6">
         <h1 className="text-base font-bold tracking-tight">Base Web Design</h1>
       </div>
