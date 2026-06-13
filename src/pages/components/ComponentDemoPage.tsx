@@ -371,7 +371,7 @@ const basicTreeData: TreeItemData[] = [
 const largeTreeData: TreeItemData[] = [
   {
     id: 'project',
-    label: 'base-web-framework',
+    label: 'base-web-design',
     children: [
       {
         id: 'src',
@@ -922,7 +922,7 @@ function BreadcrumbDemo() {
             <BreadcrumbList>
               <BreadcrumbItem><BreadcrumbLink href="/">Projects</BreadcrumbLink></BreadcrumbItem>
               <BreadcrumbSeparator />
-              <BreadcrumbItem><BreadcrumbLink href="/projects/base-web-framework">Base Web Framework</BreadcrumbLink></BreadcrumbItem>
+              <BreadcrumbItem><BreadcrumbLink href="/projects/base-web-design">Base Web Framework</BreadcrumbLink></BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem><BreadcrumbPage>Navigation Refactor</BreadcrumbPage></BreadcrumbItem>
             </BreadcrumbList>
