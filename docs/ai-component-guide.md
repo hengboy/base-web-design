@@ -1,341 +1,321 @@
 # Base Web Design — AI 组件选择指南
 
-> 本文档引导 AI 根据具体场景选择合适的前端组件。所有组件来自 `src/components/ui/` 目录。
+> 本文档用于帮助 AI 和开发者根据实际场景选择合适组件。文档内容以当前仓库实现为准，组件来源于 `src/components/ui/`，对应演示页位于 `src/pages/components/`。
 
----
+## 使用前提
+
+先明确当前项目的几个事实：
+
+- 首页 `/` 是 `Dashboard`，定位为脚手架启动台
+- 组件演示页采用“一组件一路由”，例如 `/button`、`/table`、`/navigation-menu`、`/ai-chat-dialog`
+- 左侧菜单按分组展示，但组件本身是扁平注册的
+- `Charts` 是独立页面，不属于 `src/components/ui/` 文件映射范围
+- `Sonner` 通过 `toast(...)` 调用，依赖 `App.tsx` 中全局挂载的 `Toaster`
 
 ## 快速决策树
 
-```
+```text
 用户需要什么？
 │
-├─ 用户操作触发行为 → Buttons & Actions 组
-│   ├─ 主要操作、提交表单 → Button (variant="default")
-│   ├─ 删除等危险操作 → Button (variant="destructive")
-│   ├─ 次要操作、取消 → Button (variant="outline")
-│   ├─ 纯文字链接式操作 → Button (variant="link")
-│   ├─ 图标按钮 → Button (size="icon") + 图标
-│   ├─ 加载中的按钮 → Button + disabled + Spinner
+├─ 用户操作触发行为 → Buttons & Actions
+│   ├─ 主要操作、提交表单 → Button
+│   ├─ 危险操作 → Button (variant="destructive")
+│   ├─ 图标操作 → Button (size="icon")
 │   ├─ 单个开关切换 → Toggle
-│   └─ 多选/单选按钮组 → ToggleGroup (type="multiple" | "single")
+│   └─ 多选/单选按钮组 → ToggleGroup
 │
-├─ 收集用户输入 → Form Inputs 组
+├─ 收集用户输入 → Form Inputs
 │   ├─ 单行文字 → Input
 │   ├─ 多行文字 → Textarea
-│   ├─ 数字/范围选择 → Slider
-│   ├─ 是/否开关 → Switch
+│   ├─ 字段标签 → Label
 │   ├─ 多选 → Checkbox
-│   ├─ 单选（互斥）→ RadioGroup
+│   ├─ 单选互斥 → RadioGroup
+│   ├─ 二元开关 → Switch
 │   ├─ 下拉选择 → Select
-│   ├─ 验证码/OTP → InputOTP
-│   └─ 日期选择 → Calendar (+ Popover 组合)
+│   ├─ 范围值调整 → Slider
+│   ├─ 验证码输入 → Input OTP
+│   └─ 日期选择 → Calendar
 │
-├─ 展示数据 → Data Display 组
-│   ├─ 结构化列表/表格 → Table
-│   ├─ 用户头像 → Avatar
-│   ├─ 短标签/状态标记 → Badge
-│   ├─ 悬停提示 → Tooltip
-│   ├─ 悬停展示详细信息 → HoverCard
-│   ├─ 点击弹出浮层内容 → Popover
-│   └─ 树形层级数据 → Tree
-│
-├─ 反馈状态 → Feedback 组
+├─ 展示反馈或状态 → Feedback & Status
 │   ├─ 页面内提示 → Alert
-│   ├─ 顶部弹出通知 → toast (Sonner)
+│   ├─ 顶部轻提示 → Sonner / toast(...)
 │   ├─ 进度展示 → Progress
-│   ├─ 加载中旋转 → Spinner
-│   ├─ 数据加载中占位 → Skeleton
-│   └─ 状态标签 → Badge (自定义颜色)
+│   ├─ 旋转加载 → Spinner
+│   └─ 占位加载 → Skeleton
 │
-├─ 页面/流程导航 → Navigation 组
+├─ 页面导航或结构切换 → Navigation
 │   ├─ 层级路径 → Breadcrumb
-│   ├─ 同页面内容切换 → Tabs
-│   ├─ 列表分页 → Pagination
-│   ├─ 多步骤流程 → Stepper
-│   ├─ 轮播展示 → Carousel
-│   └─ 手风琴折叠展开 → Accordion
+│   ├─ 区块切换 → Tabs
+│   ├─ 页码切换 → Pagination
+│   ├─ 主站点导航 → NavigationMenu
+│   └─ 步骤流程 → Stepper
 │
-├─ 弹出浮层 → Overlays 组
-│   ├─ 表单输入/信息确认 → Dialog
-│   ├─ 危险操作确认 → AlertDialog
-│   ├─ 侧边滑出面板 → Sheet (side="right|left|top|bottom")
-│   └─ 大图/详情展示 → Dialog (className="max-w-2xl") + ScrollArea
+├─ 展示结构化内容 → Data Display
+│   ├─ 容器卡片 → Card
+│   ├─ 结构化列表 → Table
+│   ├─ 用户形象 → Avatar
+│   ├─ 悬停说明 → Tooltip
+│   ├─ 悬停详情 → HoverCard
+│   ├─ 点击浮层详情 → Popover
+│   ├─ 时间序列 → Timeline
+│   └─ 树形数据 → Tree
 │
-├─ 菜单 → Menus 组
-│   ├─ 点击弹出下拉 → DropdownMenu
+├─ 弹出式交互 → Overlays
+│   ├─ 常规弹窗 → Dialog
+│   ├─ 危险确认 → AlertDialog
+│   ├─ 侧边或边缘面板 → Sheet
+│   ├─ 移动端抽屉 → Drawer
+│   └─ AI 对话入口 → AI Chat Dialog
+│
+├─ 操作菜单与命令 → Menus
+│   ├─ 按钮下拉菜单 → DropdownMenu
 │   ├─ 右键菜单 → ContextMenu
 │   ├─ 顶部菜单栏 → Menubar
-│   ├─ 顶部导航菜单 → NavigationMenu
-│   └─ 命令面板/快速搜索 → Command
+│   └─ 命令面板 / 快速搜索 → Command
 │
-├─ 布局结构 → Layout 组
-│   ├─ 内容分隔线 → Separator
-│   ├─ 可滚动内容区域 → ScrollArea
-│   ├─ 可拖拽调整面板 → ResizablePanelGroup
-│   └─ 固定宽高比容器 → AspectRatio
+├─ 布局组织 → Layout
+│   ├─ 分隔内容 → Separator
+│   ├─ 自定义滚动区域 → ScrollArea
+│   ├─ 可拖拽面板布局 → Resizable
+│   ├─ 固定比例媒体容器 → AspectRatio
+│   ├─ 手风琴内容块 → Accordion
+│   └─ 轻量折叠块 → Collapsible
 │
-├─ 时间线 → Timeline
-│   └─ 时间序列事件/历史记录 → Timeline
-│
-├─ 图表 → Charts
-│   └─ 数据可视化 → 使用 Recharts (已集成)
-│
-├─ 日历 → Calendar
-│   └─ 日期选择器/日历视图 → Calendar
-│
-└─ AI 对话 → AIChat
-    └─ AI 聊天界面 → AIChatDialog
+└─ 媒体或时间相关 → Media & Time
+    ├─ 日期面板 → Calendar
+    └─ 轮播内容 → Carousel
 ```
 
----
+## 按当前分组查看组件
 
-## 组件详细索引
+### 1. Buttons & Actions
 
-### 1. Buttons & Actions（按钮与操作）
+| 场景 | 组件 | 关键点 |
+| --- | --- | --- |
+| 主要 CTA、提交、确认 | `Button` | 使用 `variant` 和 `size` 控制语义与尺寸 |
+| 单个开关动作 | `Toggle` | 适合收藏、加粗、静音等二值状态 |
+| 单选/多选按钮组 | `ToggleGroup` | 适合编辑器工具栏、布局切换 |
 
-| 场景 | 组件 | 关键属性 | 文件 |
-|------|------|----------|------|
-| 主要操作（提交、确认、创建） | Button | `variant="default"` | `button.tsx` |
-| 危险操作（删除、退出） | Button | `variant="destructive"` | `button.tsx` |
-| 次要操作（取消、返回） | Button | `variant="outline"` | `button.tsx` |
-| 弱化操作（辅助功能） | Button | `variant="secondary"` | `button.tsx` |
-| 无背景文字按钮 | Button | `variant="ghost"` | `button.tsx` |
-| 链接样式按钮 | Button | `variant="link"` | `button.tsx` |
-| 纯图标按钮 | Button | `size="icon"` | `button.tsx` |
-| 加载中按钮 | Button | `disabled` + Spinner 图标 | `button.tsx` |
-| 单个开关（加粗/收藏） | Toggle | `pressed`, `onPressedChange` | `toggle.tsx` |
-| 多选按钮组（格式工具栏） | ToggleGroup | `type="multiple"` | `toggle-group.tsx` |
-| 单选按钮组（对齐方式） | ToggleGroup | `type="single"` | `toggle-group.tsx` |
+决策要点：
 
-**决策要点：**
-- 需要承载主要 CTA 时用 `default`；需要强调破坏性时用 `destructive`
-- Toggle 是独立开关；ToggleGroup 是互斥/可多选的按钮集合
+- 强语义按钮优先用 `Button`
+- 需要“选中态”而不是“点击提交”时，优先考虑 `Toggle` 或 `ToggleGroup`
 
----
+### 2. Form Inputs
 
-### 2. Form Inputs（表单输入）
+| 场景 | 组件 | 关键点 |
+| --- | --- | --- |
+| 单行文本、邮箱、密码 | `Input` | 适合常规表单字段 |
+| 多行备注、评论 | `Textarea` | 适合长文本输入 |
+| 字段标签 | `Label` | 用 `htmlFor` 关联输入控件 |
+| 多选项 | `Checkbox` | 适合协议、偏好、权限列表 |
+| 单选互斥 | `RadioGroup` | 选项较少时更直接 |
+| 设置开关 | `Switch` | 适合启用/关闭状态 |
+| 下拉选择 | `Select` | 选项多、节省空间 |
+| 数值范围 | `Slider` | 适合音量、预算、阈值 |
+| 验证码输入 | `Input OTP` | 多槽位验证码 |
+| 日期选择 | `Calendar` | 常与 `Popover` 组合 |
 
-| 场景 | 组件 | 关键属性 | 文件 |
-|------|------|----------|------|
-| 单行文本/邮箱/密码 | Input | `type="text|email|password"` | `input.tsx` |
-| 多行文本/描述/留言 | Textarea | `rows` | `textarea.tsx` |
-| 标签（配合 Input 等） | Label | `htmlFor` 关联 id | `label.tsx` |
-| 多选（协议同意/偏好） | Checkbox | `checked`, `onCheckedChange` | `checkbox.tsx` |
-| 单选互斥（性别/方案） | RadioGroup + RadioGroupItem | `value`, `defaultValue` | `radio-group.tsx` |
-| 二元切换（通知/主题） | Switch | `checked`, `onCheckedChange` | `switch.tsx` |
-| 下拉选择（框架/分类） | Select + SelectTrigger + SelectContent + SelectItem | `value`, `onValueChange` | `select.tsx` |
-| 数值范围（音量/价格） | Slider | `defaultValue`, `max`, `step` | `slider.tsx` |
-| 验证码/OTP | InputOTP | `maxLength` | `input-otp.tsx` |
-| 日期选择 | Calendar | `mode`, `selected` | `calendar.tsx` |
+决策要点：
 
-**决策要点：**
-- Checkbox vs Switch：Checkbox 用于表单选项；Switch 用于设置项/功能开关
-- RadioGroup vs Select：选项少（≤5）用 RadioGroup 一目了然；选项多用 Select 节省空间
-- Calendar 通常搭配 Popover 使用，点击按钮弹出日期选择器
+- `Checkbox` 主要用于表单项多选，`Switch` 更适合设置项启停
+- 选项少用 `RadioGroup`，选项多或需要节省空间用 `Select`
 
----
+### 3. Feedback & Status
 
-### 3. Data Display（数据展示）
+| 场景 | 组件 | 关键点 |
+| --- | --- | --- |
+| 页面内提示 | `Alert` | 适合成功、警告、错误、说明 |
+| 内联标签状态 | `Badge` | 适合状态、分类、计数 |
+| 过程进度 | `Progress` | 用于上传、处理、任务完成度 |
+| 加载占位 | `Skeleton` | 数据未返回前的结构占位 |
+| 旋转等待 | `Spinner` | 操作进行中或刷新中 |
+| 顶部轻提示 | `Sonner` | 用 `toast.success`、`toast.error` 等触发 |
 
-| 场景 | 组件 | 关键属性 | 文件 |
-|------|------|----------|------|
-| 结构化数据列表 | Table + TableHeader + TableBody + TableRow + TableCell | — | `table.tsx` |
-| 用户头像/图标 | Avatar + AvatarImage + AvatarFallback | — | `avatar.tsx` |
-| 状态标签（进行中/已完成） | Badge | `variant="default|secondary|destructive|outline"` | `badge.tsx` |
-| 技术标签（React/TS） | Badge | `variant="secondary"` | `badge.tsx` |
-| 悬停简短提示 | Tooltip + TooltipTrigger + TooltipContent | `side` | `tooltip.tsx` |
-| 悬停展示详细信息 | HoverCard + HoverCardTrigger + HoverCardContent | `side` | `hover-card.tsx` |
-| 点击弹出浮层内容 | Popover + PopoverTrigger + PopoverContent | — | `popover.tsx` |
-| 树形数据（文件目录） | Tree | — | `tree.tsx` |
+决策要点：
 
-**决策要点：**
-- Tooltip vs HoverCard：Tooltip 只放简短文字；HoverCard 放结构化内容（头像+描述）
-- Popover vs Dialog：Popover 放轻量设置/快捷操作；Dialog 放完整表单
-- Badge 的四种 variant 对应不同语义强度
+- 需要页面内持续可见的反馈，用 `Alert`
+- 需要操作后即时提示，用 `Sonner`
 
----
+### 4. Navigation
 
-### 4. Feedback & Status（反馈与状态）
+| 场景 | 组件 | 关键点 |
+| --- | --- | --- |
+| 页面路径层级 | `Breadcrumb` | 放在页面头部最常见 |
+| 同页内容切换 | `Tabs` | 平行内容区域切换 |
+| 分页控制 | `Pagination` | 适合列表和表格底部页码导航 |
+| 顶部站点导航 | `Navigation Menu` | 真实使用 `navigation-menu.tsx` |
+| 分步骤流程 | `Stepper` | 适合开户、配置、引导流 |
 
-| 场景 | 组件 | 关键属性 | 文件 |
-|------|------|----------|------|
-| 页面内提示（成功/错误/警告） | Alert + AlertTitle + AlertDescription | `variant="destructive"` | `alert.tsx` |
-| 顶部弹出通知 | `toast.success/error/warning/info` | `description`, `action` | `sonner.tsx` |
-| 操作完成进度条 | Progress | `value` (0-100) | `progress.tsx` |
-| 加载中旋转指示 | Spinner | `size="sm|md|lg|xl"` | `spinner.tsx` |
-| 数据加载占位 | Skeleton | `className="h-4 w-full"` | `skeleton.tsx` |
-| 状态标记（内联） | Badge | 自定义颜色 | `badge.tsx` |
+决策要点：
 
-**决策要点：**
-- Alert 是页面内常驻提示；Toast 是短暂弹出自动消失
-- Alert 适合表单验证错误、操作结果常驻展示
-- Toast 适合操作后的即时反馈（保存成功、删除成功）
-- Skeleton 在数据未返回前展示；Spinner 在操作进行中展示
+- `Tabs` 是平级切换，`Stepper` 是顺序流程
+- 当前仓库里的 `Pagination` demo 主要采用按钮式页码交互，不依赖传统 `href` 导航
 
----
+### 5. Data Display
 
-### 5. Navigation（导航）
+| 场景 | 组件 | 关键点 |
+| --- | --- | --- |
+| 卡片容器 | `Card` | 用于标题、描述、正文、操作区组合 |
+| 表格列表 | `Table` | 适合订单、成员、日志等结构化数据 |
+| 用户头像 | `Avatar` | 支持图片和 fallback |
+| 悬停简短提示 | `Tooltip` | 内容应尽量简短 |
+| 悬停详情卡片 | `Hover Card` | 适合用户、标签、实体预览 |
+| 点击展开说明层 | `Popover` | 轻量设置或补充信息 |
+| 时间线 | `Timeline` | 适合状态流和历史记录 |
+| 树形结构 | `Tree` | 适合目录、组织、知识结构 |
 
-| 场景 | 组件 | 关键属性 | 文件 |
-|------|------|----------|------|
-| 页面层级路径 | Breadcrumb + BreadcrumbList + BreadcrumbItem + BreadcrumbLink + BreadcrumbPage + BreadcrumbSeparator | `href` | `breadcrumb.tsx` |
-| 同页面内容分区切换 | Tabs + TabsList + TabsTrigger + TabsContent | `defaultValue`, `value` | `tabs.tsx` |
-| 列表分页 | Pagination + PaginationContent + PaginationItem + PaginationLink + PaginationPrevious + PaginationNext + PaginationEllipsis | `href`, `isActive` | `pagination.tsx` |
-| 多步骤流程 | Stepper + StepperItem + StepperSeparator + StepperTitle + StepperDescription | `step`, `completed`, `active` | `stepper.tsx` |
-| 轮播展示 | Carousel + CarouselContent + CarouselItem + CarouselPrevious + CarouselNext | — | `carousel.tsx` |
-| 手风琴折叠展开 | Accordion + AccordionItem + AccordionTrigger + AccordionContent | `type="single|multiple"` | `accordion.tsx` |
-| 可折叠面板 | Collapsible + CollapsibleTrigger + CollapsibleContent | — | `collapsible.tsx` |
+决策要点：
 
-**决策要点：**
-- Tabs vs Stepper：Tabs 是平行切换；Stepper 是有先后顺序的流程
-- Breadcrumb 放页面顶部，展示当前位置；Tabs 用于同页面内分区
-- Accordion 适合 FAQ、设置项展开；Collapsible 是更轻量的单一折叠
+- `Tooltip` 放简短说明，`Hover Card` 放结构化信息
+- `Popover` 适合轻量浮层，不适合复杂表单主流程
 
----
+### 6. Overlays
 
-### 6. Overlays（弹出浮层）
+| 场景 | 组件 | 关键点 |
+| --- | --- | --- |
+| 常规模态交互 | `Dialog` | 适合编辑、详情、确认 |
+| 危险操作确认 | `Alert Dialog` | 适合删除、停用、清空 |
+| 从边缘滑出的面板 | `Sheet` | 支持四个方向 |
+| 移动端抽屉 | `Drawer` | 更偏移动端体验 |
+| AI 对话弹窗 | `AI Chat Dialog` | 对应当前页面路由 `/ai-chat-dialog` |
 
-| 场景 | 组件 | 关键属性 | 文件 |
-|------|------|----------|------|
-| 表单输入/信息展示 | Dialog + DialogTrigger + DialogContent + DialogHeader + DialogTitle + DialogDescription + DialogFooter | `open`, `onOpenChange` | `dialog.tsx` |
-| 危险操作确认 | AlertDialog + AlertDialogTrigger + AlertDialogContent + AlertDialogHeader + AlertDialogTitle + AlertDialogDescription + AlertDialogFooter + AlertDialogAction + AlertDialogCancel | — | `alert-dialog.tsx` |
-| 侧边滑出面板 | Sheet + SheetTrigger + SheetContent + SheetHeader + SheetTitle + SheetDescription | `side="right|left|top|bottom"` | `sheet.tsx` |
+决策要点：
 
-**决策要点：**
-- Dialog vs AlertDialog：Dialog 用于常规输入/展示；AlertDialog 专门用于确认危险操作
-- Dialog 有保存/取消按钮；AlertDialog 有确认/取消按钮（确认按钮通常为红色）
-- Sheet 适合侧边栏表单、设置面板、详情查看
+- `Dialog` 处理一般输入和展示
+- `Alert Dialog` 专注危险确认
+- `Sheet` 更适合不中断上下文的侧边操作
 
----
+### 7. Menus
 
-### 7. Menus（菜单）
+| 场景 | 组件 | 关键点 |
+| --- | --- | --- |
+| 按钮触发下拉 | `Dropdown Menu` | 适合账户菜单、工具菜单 |
+| 右键触发菜单 | `Context Menu` | 适合文件、列表、画布对象 |
+| 顶部菜单栏 | `Menubar` | 适合桌面应用式导航 |
+| 命令面板 | `Command` | 当前页面使用真实 `command.tsx` 能力 |
 
-| 场景 | 组件 | 关键属性 | 文件 |
-|------|------|----------|------|
-| 点击弹出下拉菜单 | DropdownMenu + DropdownMenuTrigger + DropdownMenuContent + DropdownMenuItem + DropdownMenuSeparator + DropdownMenuLabel + DropdownMenuGroup + DropdownMenuShortcut | — | `dropdown-menu.tsx` |
-| 带复选框的下拉项 | DropdownMenuCheckboxItem | `checked`, `onCheckedChange` | `dropdown-menu.tsx` |
-| 带单选的下拉项 | DropdownMenuRadioGroup + DropdownMenuRadioItem | `value`, `onValueChange` | `dropdown-menu.tsx` |
-| 子菜单 | DropdownMenuSub + DropdownMenuSubTrigger + DropdownMenuSubContent | — | `dropdown-menu.tsx` |
-| 右键菜单 | ContextMenu + ContextMenuTrigger + ContextMenuContent + ContextMenuItem + ContextMenuSeparator + ContextMenuShortcut | — | `context-menu.tsx` |
-| 顶部菜单栏 | Menubar + MenubarMenu + MenubarTrigger + MenubarContent + MenubarItem + MenubarSeparator + MenubarShortcut | — | `menubar.tsx` |
-| 顶部导航菜单 | NavigationMenu | — | `navigation-menu.tsx` |
-| 命令面板/全局搜索 | Command + CommandInput + CommandList + CommandItem + CommandGroup + CommandSeparator + CommandEmpty | — | `command.tsx` |
+决策要点：
 
-**决策要点：**
-- DropdownMenu 是点击触发；ContextMenu 是右键触发；Menubar 是桌面应用风格的顶部菜单
-- Command 适合全局搜索/快速跳转（通常绑定 ⌘K 快捷键）
-- NavigationMenu 适合网站主导航；Menubar 适合桌面应用式菜单
+- `Dropdown Menu` 是点击触发，`Context Menu` 是右键触发
+- `Command` 适合全局搜索、快速跳转、动作面板
 
----
+### 8. Layout
 
-### 8. Layout（布局）
+| 场景 | 组件 | 关键点 |
+| --- | --- | --- |
+| 内容分隔 | `Separator` | `orientation="horizontal" \| "vertical"` |
+| 滚动内容块 | `Scroll Area` | 统一滚动条外观 |
+| 可拖拽布局 | `Resizable` | 使用 `orientation`、`defaultSize`、`minSize` 等能力 |
+| 固定比例媒体 | `Aspect Ratio` | 适合封面、视频、预览图 |
+| 多段折叠内容 | `Accordion` | FAQ、说明区、设置分节 |
+| 单段轻量折叠 | `Collapsible` | 适合工具块、日志详情 |
 
-| 场景 | 组件 | 关键属性 | 文件 |
-|------|------|----------|------|
-| 内容分隔线 | Separator | `orientation="horizontal|vertical"` | `separator.tsx` |
-| 自定义滚动区域 | ScrollArea | `className="h-[200px]"` | `scroll-area.tsx` |
-| 可拖拽调整面板 | ResizablePanelGroup + ResizablePanel + ResizableHandle | `direction="horizontal|vertical"`, `defaultSize`, `minSize` | `resizable.tsx` |
-| 固定宽高比容器 | AspectRatio | `ratio={16/9}` | `aspect-ratio.tsx` |
+决策要点：
 
-**决策要点：**
-- ScrollArea 用于内容可能溢出时的美观滚动条
-- ResizablePanelGroup 适合 IDE 式布局、可调整的侧边栏
-- AspectRatio 适合图片/视频/卡片封面需要固定比例时
+- `Accordion` 适合分组式展开内容
+- `Collapsible` 更适合单块内容的展开与收起
 
----
+### 9. Media & Time
 
-### 9. 特殊组件
-
-| 场景 | 组件 | 文件 |
-|------|------|------|
-| 时间序列/历史记录展示 | Timeline + TimelineItem + TimelineHeader + TimelineTitle + TimelineDescription + TimelineConnector + TimelineContent | `timeline.tsx` |
-| 数据可视化（折线/柱状/饼图） | Recharts（LineChart, BarChart, PieChart 等） | charts 页面 |
-| 日期选择器/日历视图 | Calendar | `calendar.tsx` |
-| AI 聊天对话框 | AIChatDialog | `AIChatDialog.tsx` |
-| 卡片容器（通用包裹） | Card + CardHeader + CardTitle + CardDescription + CardContent | `card.tsx` |
-
----
+| 场景 | 组件 | 关键点 |
+| --- | --- | --- |
+| 日期视图 | `Calendar` | 单选、范围、禁用日期等 |
+| 轮播内容 | `Carousel` | 适合横向卡片、图片、推荐内容 |
 
 ## 常见组合模式
 
-### 模式 1：表单弹窗
-```
-Button (DialogTrigger) → Dialog → DialogContent → [Label + Input, Textarea] + [Checkbox] → DialogFooter → [Button variant="outline", Button]
+### 模式 1：启动台首页
+
+```text
+Card × N → 统计摘要
+Badge / Avatar / Skeleton → 状态辅助块
+Button / Link → 快捷入口
 ```
 
-### 模式 2：确认删除
-```
-Button (AlertDialogTrigger) → AlertDialog → AlertDialogContent → AlertDialogHeader → AlertDialogFooter → [AlertDialogCancel, AlertDialogAction variant="destructive"]
+适用场景：
+
+- 脚手架首页
+- 运营概览
+- 项目启动台
+
+### 模式 2：表单弹窗
+
+```text
+Button (DialogTrigger) → Dialog → DialogContent → [Label + Input / Textarea / Select] → DialogFooter → [取消, 提交]
 ```
 
-### 模式 3：详情浮层
-```
-HoverCard → HoverCardTrigger (Avatar/Button) → HoverCardContent → [Avatar, 用户名, 描述, 日期]
+### 模式 3：确认删除
+
+```text
+Button (AlertDialogTrigger) → AlertDialog → AlertDialogContent → AlertDialogFooter → [AlertDialogCancel, AlertDialogAction]
 ```
 
-### 模式 4：表格 + 操作
-```
-Table → [TableHeader → TableRow → TableHead×N] + [TableBody → TableRow → TableCell×N → [Badge, Button]]
+### 模式 4：表格 + 行内状态
+
+```text
+Table → TableHeader + TableBody → TableRow → TableCell → Badge / Button / Avatar
 ```
 
-### 模式 5：设置页面
-```
-ScrollArea → [Separator 分节] → 每节: [Label + Switch/Select/RadioGroup] → Toast 反馈
+### 模式 5：表格 + 分页
+
+```text
+Table → 数据行列表
+表格页脚 → 结果摘要 + Pagination
 ```
 
-### 模式 6：多步骤表单
-```
-Stepper → [StepperItem×N] → 当前步骤内容 [Input, Textarea, Select] → [Button "上一步", Button "下一步"]
+适用场景：
+
+- 后台列表页
+- 成员管理
+- 订单记录
+
+说明：
+
+- 当前仓库 `table` 页面已经包含 `Table + Pagination` 的完整 demo
+- `Pagination` 主要作为交互控件使用，可与筛选、统计、批量操作一起放在列表页脚
+
+### 模式 6：设置页
+
+```text
+ScrollArea → 分节容器 → [Label + Switch / Select / RadioGroup] → Sonner 反馈
 ```
 
-### 模式 7：数据加载展示
-```
-加载前: Skeleton×N → 加载中: Spinner → 加载完成: Table/Card + Alert(错误时) → 操作后: Toast
-```
+### 模式 7：日期选择器
 
-### 模式 8：日期选择器
-```
-Popover → PopoverTrigger (Button + CalendarIcon) → PopoverContent → Calendar
+```text
+Popover → PopoverTrigger (Button) → PopoverContent → Calendar
 ```
 
----
+### 模式 8：命令面板
 
-## 组件选择速查表
+```text
+Button / Shortcut → Command / CommandDialog → CommandInput → CommandList → CommandItem
+```
 
-| 如果用户说... | 使用组件 |
-|---------------|----------|
-| "一个按钮，点击提交" | Button |
-| "删除前确认" | AlertDialog |
-| "切换不同设置面板" | Tabs |
-| "下拉选择框" | Select |
-| "弹窗填写信息" | Dialog |
-| "表格展示数据" | Table |
-| "加载中动画" | Spinner |
-| "数据加载占位" | Skeleton |
-| "操作成功提示" | toast.success |
-| "页面内错误提示" | Alert (variant="destructive") |
-| "进度条" | Progress |
-| "面包屑导航" | Breadcrumb |
-| "用户头像" | Avatar |
-| "状态标签" | Badge |
-| "鼠标悬停提示" | Tooltip |
-| "悬停显示详细信息" | HoverCard |
-| "侧边滑出面板" | Sheet |
-| "右键菜单" | ContextMenu |
-| "下拉菜单" | DropdownMenu |
-| "搜索命令面板" | Command |
-| "步骤条" | Stepper |
-| "手风琴折叠" | Accordion |
-| "轮播图" | Carousel |
-| "日期选择" | Calendar + Popover |
-| "开关切换" | Switch |
-| "多选框" | Checkbox |
-| "单选组" | RadioGroup |
-| "滑块" | Slider |
-| "可拖拽面板" | ResizablePanelGroup |
-| "自定义滚动条" | ScrollArea |
-| "分隔线" | Separator |
-| "时间线" | Timeline |
-| "树形菜单" | Tree |
-| "聊天界面" | AIChatDialog |
-| "图表" | Recharts |
+### 模式 9：顶部主导航
+
+```text
+NavigationMenu → NavigationMenuList → NavigationMenuItem → NavigationMenuTrigger / NavigationMenuLink
+```
+
+## 选择速查
+
+| 如果需求是... | 优先组件 |
+| --- | --- |
+| 提交、保存、创建 | `Button` |
+| 删除前确认 | `Alert Dialog` |
+| 弹窗编辑表单 | `Dialog` |
+| 侧边滑出详情或设置 | `Sheet` |
+| 多步骤配置流程 | `Stepper` |
+| 同页内容切换 | `Tabs` |
+| 顶部站点主导航 | `Navigation Menu` |
+| 列表分页 | `Pagination` |
+| 表格数据展示 | `Table` |
+| 表格底部分页 | `Table + Pagination` |
+| 右键操作菜单 | `Context Menu` |
+| 全局搜索或快捷跳转 | `Command` |
+| 操作成功轻提示 | `Sonner` |
+| 页面内错误提示 | `Alert` |
+| 数据未返回占位 | `Skeleton` |
+| 页面首页概览 | `Card + Badge + Avatar + Button` |
