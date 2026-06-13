@@ -122,3 +122,25 @@
     margin: 0;
   }
 }
+
+/* Toast type colors — Sonner toast with custom className */
+.toast-success {
+  --normal-bg: var(--popover);
+  --normal-text: hsl(142, 71%, 29%);
+  --normal-border: hsl(142, 76%, 36%);
+}
+.toast-error {
+  --normal-bg: var(--popover);
+  --normal-text: hsl(0, 72%, 40%);
+  --normal-border: hsl(0, 74%, 50%);
+}
+.toast-warning {
+  --normal-bg: var(--popover);
+  --normal-text: hsl(31, 85%, 30%);
+  --normal-border: hsl(31, 86%, 48%);
+}
+.toast-info {
+  --normal-bg: var(--popover);
+  --normal-text: var(--popover-foreground);
+  --normal-border: var(--border);
+}

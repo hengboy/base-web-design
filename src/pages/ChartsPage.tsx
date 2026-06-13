@@ -70,14 +70,15 @@ export function ChartsPage() {
           <CardDescription>用户增长与订单趋势</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="w-full" style={{ height: 300 }}>
-            <ResponsiveContainer width="100%" height="100%">
+          <div className="w-full overflow-visible" style={{ height: 300 }}>
+            <ResponsiveContainer width="100%" height="100%" style={{ overflow: 'visible' }}>
               <LineChart data={lineData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} opacity={0.5} />
                 <XAxis dataKey="month" tick={{ fontSize: 12, fill: axisStroke }} />
                 <YAxis tick={{ fontSize: 12, fill: axisStroke }} />
                 <Tooltip
-                  contentStyle={{ ...tooltipStyle, zIndex: 100 }}
+                  wrapperStyle={{ zIndex: 9999 }}
+                  contentStyle={tooltipStyle}
                   itemStyle={{ color: 'hsl(var(--foreground))' }}
                   labelStyle={{ color: 'hsl(var(--muted-foreground))', marginBottom: 4 }}
                 />
@@ -147,8 +148,8 @@ export function ChartsPage() {
             <CardDescription>设备分布</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="w-full" style={{ height: 250 }}>
-              <ResponsiveContainer width="100%" height="100%">
+            <div className="w-full overflow-visible" style={{ height: 250 }}>
+              <ResponsiveContainer width="100%" height="100%" style={{ overflow: 'visible' }}>
                 <PieChart>
                   <Pie
                     data={pieData}
@@ -166,7 +167,10 @@ export function ChartsPage() {
                       />
                     ))}
                   </Pie>
-                  <Tooltip contentStyle={tooltipStyle} />
+                  <Tooltip
+                    wrapperStyle={{ zIndex: 9999 }}
+                    contentStyle={tooltipStyle}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -192,14 +196,15 @@ export function ChartsPage() {
             <CardDescription>周访问量变化</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="w-full" style={{ height: 250 }}>
-              <ResponsiveContainer width="100%" height="100%">
+            <div className="w-full overflow-visible" style={{ height: 250 }}>
+              <ResponsiveContainer width="100%" height="100%" style={{ overflow: 'visible' }}>
                 <AreaChart data={lineData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} opacity={0.5} />
                   <XAxis dataKey="month" tick={{ fontSize: 12, fill: axisStroke }} />
                   <YAxis tick={{ fontSize: 12, fill: axisStroke }} />
                   <Tooltip
-                    contentStyle={{ ...tooltipStyle, zIndex: 100 }}
+                    wrapperStyle={{ zIndex: 9999 }}
+                    contentStyle={tooltipStyle}
                     itemStyle={{ color: 'hsl(var(--foreground))' }}
                     labelStyle={{ color: 'hsl(var(--muted-foreground))', marginBottom: 4 }}
                   />

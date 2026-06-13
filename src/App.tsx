@@ -51,7 +51,7 @@ export default function App() {
               <Route path="/ai-chat" element={<AIChatPage />} />
             </Route>
           </Routes>
-          <Toaster />
+          <Toaster position="top-right" />
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>
