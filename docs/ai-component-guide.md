@@ -1,4 +1,4 @@
-# Base Web Framework — AI 组件选择指南
+# Base Web Design — AI 组件选择指南
 
 > 本文档引导 AI 根据具体场景选择合适的前端组件。所有组件来自 `src/components/ui/` 目录。
 

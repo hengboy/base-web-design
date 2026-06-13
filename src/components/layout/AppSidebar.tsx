@@ -51,7 +51,7 @@ export function AppSidebar() {
   return (
     <aside className="hidden md:flex w-64 flex-col border-r border-border bg-sidebar h-screen">
       <div className="p-6 border-b border-border">
-        <h1 className="text-lg font-bold tracking-tight">Base Web Framework</h1>
+        <h1 className="text-lg font-bold tracking-tight">Base Web Design</h1>
         <p className="text-sm text-muted-foreground mt-1">组件演示</p>
       </div>
       <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
