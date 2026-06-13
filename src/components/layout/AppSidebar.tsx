@@ -52,14 +52,27 @@ import {
   TriangleAlert,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useI18n } from '@/hooks/use-i18n'
 import {
   componentPageGroups,
   getComponentPagePath,
+  type LocalizedLabel,
   type ComponentIconKey,
 } from '@/pages/components/registry'
 
-const topNavItems = [{ title: 'Dashboard', path: '/', icon: LayoutDashboard }]
-const bottomNavItems = [{ title: 'Charts', path: '/charts', icon: BarChart3 }]
+const topNavItems = [{ titleKey: 'nav.dashboard', path: '/', icon: LayoutDashboard }] as const
+const bottomNavItems = [{ titleKey: 'nav.charts', path: '/charts', icon: BarChart3 }] as const
+const componentGroupLabelKeys = {
+  'Buttons & Actions': 'nav.group.buttonsActions',
+  'Form Inputs': 'nav.group.formInputs',
+  'Feedback & Status': 'nav.group.feedbackStatus',
+  Navigation: 'nav.group.navigation',
+  'Data Display': 'nav.group.dataDisplay',
+  Overlays: 'nav.group.overlays',
+  Menus: 'nav.group.menus',
+  Layout: 'nav.group.layout',
+  'Media & Time': 'nav.group.mediaTime',
+} as const
 
 const componentIcons: Record<ComponentIconKey, React.ComponentType<{ className?: string }>> = {
   appWindow: AppWindow,
@@ -150,17 +163,20 @@ function SidebarGroupLabel({ title }: { title: string }) {
 }
 
 export function AppSidebar() {
+  const { locale, t } = useI18n()
+  const getMenuTitle = (label: LocalizedLabel) => label[locale]
+
   return (
     <aside className="hidden min-h-screen w-64 flex-col self-stretch border-r border-border bg-sidebar md:flex">
       <div className="flex h-14 items-center border-b border-border px-6">
         <h1 className="text-base font-bold tracking-tight">Base Web Design</h1>
       </div>
       <nav className="flex-1 space-y-1 overflow-y-auto p-3">
-        <SidebarGroupLabel title="Overview" />
+        <SidebarGroupLabel title={t('nav.overview')} />
         {topNavItems.map((item) => (
           <SidebarNavItem
             key={item.path}
-            title={item.title}
+            title={t(item.titleKey)}
             path={item.path}
             icon={item.icon}
           />
@@ -168,11 +184,11 @@ export function AppSidebar() {
 
         {componentPageGroups.map((section) => (
           <div key={section.group}>
-            <SidebarGroupLabel title={section.group} />
+            <SidebarGroupLabel title={t(componentGroupLabelKeys[section.group])} />
             {section.entries.map((entry) => (
               <SidebarNavItem
                 key={entry.slug}
-                title={entry.title}
+                title={getMenuTitle(entry.menuTitle)}
                 path={getComponentPagePath(entry.slug)}
                 icon={componentIcons[entry.icon]}
               />
@@ -180,11 +196,11 @@ export function AppSidebar() {
           </div>
         ))}
 
-        <SidebarGroupLabel title="Charts" />
+        <SidebarGroupLabel title={t('nav.charts')} />
         {bottomNavItems.map((item) => (
           <SidebarNavItem
             key={item.path}
-            title={item.title}
+            title={t(item.titleKey)}
             path={item.path}
             icon={item.icon}
           />

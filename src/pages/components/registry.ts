@@ -12,10 +12,16 @@ export const componentGroups = [
 
 export type ComponentGroup = (typeof componentGroups)[number]
 
+export interface LocalizedLabel {
+  zh: string
+  en: string
+}
+
 export const componentPageEntries = [
   {
     slug: 'accordion',
     title: 'Accordion',
+    menuTitle: { zh: '折叠面板', en: 'Accordion' },
     description: '可折叠内容面板，适合 FAQ、设置项和分组信息。',
     group: 'Layout',
     icon: 'listCollapse',
@@ -23,6 +29,7 @@ export const componentPageEntries = [
   {
     slug: 'ai-chat-dialog',
     title: 'AI Chat Dialog',
+    menuTitle: { zh: 'AI 对话框', en: 'AI Chat Dialog' },
     description: '带消息流、输入区和打字反馈的 AI 对话组件。',
     group: 'Overlays',
     icon: 'messageCircleMore',
@@ -30,6 +37,7 @@ export const componentPageEntries = [
   {
     slug: 'alert-dialog',
     title: 'Alert Dialog',
+    menuTitle: { zh: '警告对话框', en: 'Alert Dialog' },
     description: '用于危险操作确认的阻断式确认弹窗。',
     group: 'Overlays',
     icon: 'shieldAlert',
@@ -37,6 +45,7 @@ export const componentPageEntries = [
   {
     slug: 'alert',
     title: 'Alert',
+    menuTitle: { zh: '提示框', en: 'Alert' },
     description: '用于成功、警告、错误和说明信息的提示容器。',
     group: 'Feedback & Status',
     icon: 'triangleAlert',
@@ -44,6 +53,7 @@ export const componentPageEntries = [
   {
     slug: 'aspect-ratio',
     title: 'Aspect Ratio',
+    menuTitle: { zh: '宽高比', en: 'Aspect Ratio' },
     description: '保持媒体内容固定宽高比的布局容器。',
     group: 'Layout',
     icon: 'ratio',
@@ -51,6 +61,7 @@ export const componentPageEntries = [
   {
     slug: 'avatar',
     title: 'Avatar',
+    menuTitle: { zh: '头像', en: 'Avatar' },
     description: '展示用户头像、缩写和状态的轻量资料组件。',
     group: 'Data Display',
     icon: 'circleUserRound',
@@ -58,6 +69,7 @@ export const componentPageEntries = [
   {
     slug: 'badge',
     title: 'Badge',
+    menuTitle: { zh: '徽标', en: 'Badge' },
     description: '用于状态、标签和分类标识的紧凑型标签。',
     group: 'Feedback & Status',
     icon: 'badge',
@@ -65,6 +77,7 @@ export const componentPageEntries = [
   {
     slug: 'breadcrumb',
     title: 'Breadcrumb',
+    menuTitle: { zh: '面包屑', en: 'Breadcrumb' },
     description: '展示当前位置层级路径的导航组件。',
     group: 'Navigation',
     icon: 'route',
@@ -72,6 +85,7 @@ export const componentPageEntries = [
   {
     slug: 'button',
     title: 'Button',
+    menuTitle: { zh: '按钮', en: 'Button' },
     description: '支持变体、尺寸、图标和交互状态的基础按钮。',
     group: 'Buttons & Actions',
     icon: 'mousePointerClick',
@@ -79,6 +93,7 @@ export const componentPageEntries = [
   {
     slug: 'calendar',
     title: 'Calendar',
+    menuTitle: { zh: '日历', en: 'Calendar' },
     description: '支持单选、范围和禁用日期的日历选择器。',
     group: 'Media & Time',
     icon: 'calendarDays',
@@ -86,6 +101,7 @@ export const componentPageEntries = [
   {
     slug: 'card',
     title: 'Card',
+    menuTitle: { zh: '卡片', en: 'Card' },
     description: '用于组织标题、描述、正文和操作区的卡片容器。',
     group: 'Data Display',
     icon: 'squareStack',
@@ -93,6 +109,7 @@ export const componentPageEntries = [
   {
     slug: 'carousel',
     title: 'Carousel',
+    menuTitle: { zh: '轮播', en: 'Carousel' },
     description: '基于 Embla 的轮播容器，支持多种布局方式。',
     group: 'Media & Time',
     icon: 'galleryHorizontal',
@@ -100,6 +117,7 @@ export const componentPageEntries = [
   {
     slug: 'checkbox',
     title: 'Checkbox',
+    menuTitle: { zh: '复选框', en: 'Checkbox' },
     description: '支持多选、禁用和列表组合的复选框组件。',
     group: 'Form Inputs',
     icon: 'squareCheck',
@@ -107,6 +125,7 @@ export const componentPageEntries = [
   {
     slug: 'collapsible',
     title: 'Collapsible',
+    menuTitle: { zh: '可折叠区', en: 'Collapsible' },
     description: '按需展开内容的轻量折叠容器。',
     group: 'Layout',
     icon: 'chevronsUpDown',
@@ -114,6 +133,7 @@ export const componentPageEntries = [
   {
     slug: 'command',
     title: 'Command',
+    menuTitle: { zh: '命令面板', en: 'Command' },
     description: '基于 cmdk 的命令面板与快速导航组件。',
     group: 'Menus',
     icon: 'command',
@@ -121,6 +141,7 @@ export const componentPageEntries = [
   {
     slug: 'context-menu',
     title: 'Context Menu',
+    menuTitle: { zh: '右键菜单', en: 'Context Menu' },
     description: '右键触发的上下文菜单，适合文件和列表操作。',
     group: 'Menus',
     icon: 'squareMenu',
@@ -128,6 +149,7 @@ export const componentPageEntries = [
   {
     slug: 'dialog',
     title: 'Dialog',
+    menuTitle: { zh: '对话框', en: 'Dialog' },
     description: '用于表单、详情和确认流程的模态对话框。',
     group: 'Overlays',
     icon: 'messageSquare',
@@ -135,6 +157,7 @@ export const componentPageEntries = [
   {
     slug: 'drawer',
     title: 'Drawer',
+    menuTitle: { zh: '抽屉', en: 'Drawer' },
     description: '底部滑出的移动端风格抽屉容器。',
     group: 'Overlays',
     icon: 'panelBottomOpen',
@@ -142,6 +165,7 @@ export const componentPageEntries = [
   {
     slug: 'dropdown-menu',
     title: 'Dropdown Menu',
+    menuTitle: { zh: '下拉菜单', en: 'Dropdown Menu' },
     description: '按钮触发的层级菜单，适合账户和工具操作。',
     group: 'Menus',
     icon: 'chevronDownSquare',
@@ -149,6 +173,7 @@ export const componentPageEntries = [
   {
     slug: 'hover-card',
     title: 'Hover Card',
+    menuTitle: { zh: '悬浮卡片', en: 'Hover Card' },
     description: '悬停后展示补充信息的详情卡片。',
     group: 'Data Display',
     icon: 'mousePointer2',
@@ -156,6 +181,7 @@ export const componentPageEntries = [
   {
     slug: 'input',
     title: 'Input',
+    menuTitle: { zh: '输入框', en: 'Input' },
     description: '支持文本、邮箱、密码和状态反馈的输入框。',
     group: 'Form Inputs',
     icon: 'textCursorInput',
@@ -163,6 +189,7 @@ export const componentPageEntries = [
   {
     slug: 'input-otp',
     title: 'Input OTP',
+    menuTitle: { zh: '验证码输入', en: 'Input OTP' },
     description: '多槽位验证码输入组件，适合短信和邮箱验证。',
     group: 'Form Inputs',
     icon: 'keyRound',
@@ -170,6 +197,7 @@ export const componentPageEntries = [
   {
     slug: 'label',
     title: 'Label',
+    menuTitle: { zh: '标签', en: 'Label' },
     description: '表单字段和说明文字的语义标签组件。',
     group: 'Form Inputs',
     icon: 'tags',
@@ -177,6 +205,7 @@ export const componentPageEntries = [
   {
     slug: 'menubar',
     title: 'Menubar',
+    menuTitle: { zh: '菜单栏', en: 'Menubar' },
     description: '桌面应用风格的顶部菜单栏组件。',
     group: 'Menus',
     icon: 'menuSquare',
@@ -184,6 +213,7 @@ export const componentPageEntries = [
   {
     slug: 'navigation-menu',
     title: 'Navigation Menu',
+    menuTitle: { zh: '导航菜单', en: 'Navigation Menu' },
     description: '支持触发器、内容面板和视口的站点导航组件。',
     group: 'Navigation',
     icon: 'panelTop',
@@ -191,6 +221,7 @@ export const componentPageEntries = [
   {
     slug: 'pagination',
     title: 'Pagination',
+    menuTitle: { zh: '分页', en: 'Pagination' },
     description: '适用于列表和表格的页码导航组件。',
     group: 'Navigation',
     icon: 'ellipsis',
@@ -198,6 +229,7 @@ export const componentPageEntries = [
   {
     slug: 'popover',
     title: 'Popover',
+    menuTitle: { zh: '气泡卡片', en: 'Popover' },
     description: '点击触发的浮层内容容器。',
     group: 'Data Display',
     icon: 'appWindow',
@@ -205,6 +237,7 @@ export const componentPageEntries = [
   {
     slug: 'progress',
     title: 'Progress',
+    menuTitle: { zh: '进度条', en: 'Progress' },
     description: '用于上传、任务和容量占比的进度展示组件。',
     group: 'Feedback & Status',
     icon: 'chartNoAxesColumnIncreasing',
@@ -212,6 +245,7 @@ export const componentPageEntries = [
   {
     slug: 'radio-group',
     title: 'Radio Group',
+    menuTitle: { zh: '单选组', en: 'Radio Group' },
     description: '用于互斥选项选择的单选组组件。',
     group: 'Form Inputs',
     icon: 'circleDot',
@@ -219,6 +253,7 @@ export const componentPageEntries = [
   {
     slug: 'resizable',
     title: 'Resizable',
+    menuTitle: { zh: '可调整面板', en: 'Resizable' },
     description: '支持拖拽调整布局比例的面板组。',
     group: 'Layout',
     icon: 'panelLeftDashed',
@@ -226,6 +261,7 @@ export const componentPageEntries = [
   {
     slug: 'scroll-area',
     title: 'Scroll Area',
+    menuTitle: { zh: '滚动区域', en: 'Scroll Area' },
     description: '带统一滚动样式的可滚动区域容器。',
     group: 'Layout',
     icon: 'scrollText',
@@ -233,6 +269,7 @@ export const componentPageEntries = [
   {
     slug: 'select',
     title: 'Select',
+    menuTitle: { zh: '选择器', en: 'Select' },
     description: '支持分组和自定义触发器的下拉选择器。',
     group: 'Form Inputs',
     icon: 'listFilter',
@@ -240,6 +277,7 @@ export const componentPageEntries = [
   {
     slug: 'separator',
     title: 'Separator',
+    menuTitle: { zh: '分隔线', en: 'Separator' },
     description: '用于水平或垂直分隔内容的基础分隔线。',
     group: 'Layout',
     icon: 'separatorHorizontal',
@@ -247,6 +285,7 @@ export const componentPageEntries = [
   {
     slug: 'sheet',
     title: 'Sheet',
+    menuTitle: { zh: '侧滑面板', en: 'Sheet' },
     description: '从四个方向滑出的面板容器。',
     group: 'Overlays',
     icon: 'panelRightOpen',
@@ -254,6 +293,7 @@ export const componentPageEntries = [
   {
     slug: 'skeleton',
     title: 'Skeleton',
+    menuTitle: { zh: '骨架屏', en: 'Skeleton' },
     description: '用于加载态占位的骨架屏组件。',
     group: 'Feedback & Status',
     icon: 'scanSearch',
@@ -261,6 +301,7 @@ export const componentPageEntries = [
   {
     slug: 'slider',
     title: 'Slider',
+    menuTitle: { zh: '滑块', en: 'Slider' },
     description: '适合范围、强度和价格选择的滑块组件。',
     group: 'Form Inputs',
     icon: 'slidersHorizontal',
@@ -268,6 +309,7 @@ export const componentPageEntries = [
   {
     slug: 'sonner',
     title: 'Sonner',
+    menuTitle: { zh: '轻提示', en: 'Sonner' },
     description: '基于全局 Toaster 的轻提示调用方式演示。',
     group: 'Feedback & Status',
     icon: 'bellRing',
@@ -275,6 +317,7 @@ export const componentPageEntries = [
   {
     slug: 'spinner',
     title: 'Spinner',
+    menuTitle: { zh: '加载指示器', en: 'Spinner' },
     description: '用于提交、加载和等待状态的旋转指示器。',
     group: 'Feedback & Status',
     icon: 'loaderCircle',
@@ -282,6 +325,7 @@ export const componentPageEntries = [
   {
     slug: 'stepper',
     title: 'Stepper',
+    menuTitle: { zh: '步骤条', en: 'Stepper' },
     description: '按步骤展示流程进度和当前位置的组件。',
     group: 'Navigation',
     icon: 'listOrdered',
@@ -289,6 +333,7 @@ export const componentPageEntries = [
   {
     slug: 'switch',
     title: 'Switch',
+    menuTitle: { zh: '开关', en: 'Switch' },
     description: '适合二元开关和设置项切换的组件。',
     group: 'Form Inputs',
     icon: 'toggleLeft',
@@ -296,6 +341,7 @@ export const componentPageEntries = [
   {
     slug: 'table',
     title: 'Table',
+    menuTitle: { zh: '表格', en: 'Table' },
     description: '适合结构化列表、状态和金额展示的表格组件。',
     group: 'Data Display',
     icon: 'table2',
@@ -303,6 +349,7 @@ export const componentPageEntries = [
   {
     slug: 'tabs',
     title: 'Tabs',
+    menuTitle: { zh: '标签页', en: 'Tabs' },
     description: '在同一页面切换内容区域的标签页组件。',
     group: 'Navigation',
     icon: 'folders',
@@ -310,6 +357,7 @@ export const componentPageEntries = [
   {
     slug: 'textarea',
     title: 'Textarea',
+    menuTitle: { zh: '文本域', en: 'Textarea' },
     description: '适合多行输入、评论和备注的文本域组件。',
     group: 'Form Inputs',
     icon: 'text',
@@ -317,6 +365,7 @@ export const componentPageEntries = [
   {
     slug: 'timeline',
     title: 'Timeline',
+    menuTitle: { zh: '时间线', en: 'Timeline' },
     description: '按时间顺序展示事件和里程碑的垂直时间线。',
     group: 'Data Display',
     icon: 'clock3',
@@ -324,6 +373,7 @@ export const componentPageEntries = [
   {
     slug: 'toggle',
     title: 'Toggle',
+    menuTitle: { zh: '切换按钮', en: 'Toggle' },
     description: '单个开关按钮，适合工具栏和格式控制。',
     group: 'Buttons & Actions',
     icon: 'toggleRight',
@@ -331,6 +381,7 @@ export const componentPageEntries = [
   {
     slug: 'toggle-group',
     title: 'Toggle Group',
+    menuTitle: { zh: '切换按钮组', en: 'Toggle Group' },
     description: '支持单选和多选的切换按钮组。',
     group: 'Buttons & Actions',
     icon: 'group',
@@ -338,6 +389,7 @@ export const componentPageEntries = [
   {
     slug: 'tooltip',
     title: 'Tooltip',
+    menuTitle: { zh: '提示气泡', en: 'Tooltip' },
     description: '悬停时显示额外说明的轻量浮层组件。',
     group: 'Data Display',
     icon: 'badgeInfo',
@@ -345,6 +397,7 @@ export const componentPageEntries = [
   {
     slug: 'tree',
     title: 'Tree',
+    menuTitle: { zh: '树形控件', en: 'Tree' },
     description: '支持层级展开和搜索过滤的树形结构组件。',
     group: 'Data Display',
     icon: 'folderTree',

@@ -11,13 +11,28 @@ import {
 } from '@/components/ui/sheet'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
+import { useI18n } from '@/hooks/use-i18n'
 
-// 模拟消息数据
 interface Message {
   id: string
-  title: string
-  description: string
-  time: string
+  titleKey:
+    | 'notifications.message.system.title'
+    | 'notifications.message.release.title'
+    | 'notifications.message.security.title'
+    | 'notifications.message.review.title'
+    | 'notifications.message.meeting.title'
+  descriptionKey:
+    | 'notifications.message.system.description'
+    | 'notifications.message.release.description'
+    | 'notifications.message.security.description'
+    | 'notifications.message.review.description'
+    | 'notifications.message.meeting.description'
+  timeKey:
+    | 'notifications.message.system.time'
+    | 'notifications.message.release.time'
+    | 'notifications.message.security.time'
+    | 'notifications.message.review.time'
+    | 'notifications.message.meeting.time'
   read: boolean
   type: 'info' | 'success' | 'warning'
 }
@@ -25,41 +40,41 @@ interface Message {
 const mockMessages: Message[] = [
   {
     id: '1',
-    title: '系统通知',
-    description: '您的项目已成功部署，可以正常访问。',
-    time: '5 分钟前',
+    titleKey: 'notifications.message.system.title',
+    descriptionKey: 'notifications.message.system.description',
+    timeKey: 'notifications.message.system.time',
     read: false,
     type: 'success',
   },
   {
     id: '2',
-    title: '版本更新',
-    description: '框架已更新至 v2.1.0，新增了多个实用组件。',
-    time: '1 小时前',
+    titleKey: 'notifications.message.release.title',
+    descriptionKey: 'notifications.message.release.description',
+    timeKey: 'notifications.message.release.time',
     read: false,
     type: 'info',
   },
   {
     id: '3',
-    title: '安全提醒',
-    description: '检测到异地登录，请确认是否本人操作。',
-    time: '3 小时前',
+    titleKey: 'notifications.message.security.title',
+    descriptionKey: 'notifications.message.security.description',
+    timeKey: 'notifications.message.security.time',
     read: false,
     type: 'warning',
   },
   {
     id: '4',
-    title: '审核通过',
-    description: '您提交的 PR #128 已被审核通过。',
-    time: '昨天',
+    titleKey: 'notifications.message.review.title',
+    descriptionKey: 'notifications.message.review.description',
+    timeKey: 'notifications.message.review.time',
     read: true,
     type: 'success',
   },
   {
     id: '5',
-    title: '会议提醒',
-    description: '今天下午 3:00 有团队周会，请准时参加。',
-    time: '昨天',
+    titleKey: 'notifications.message.meeting.title',
+    descriptionKey: 'notifications.message.meeting.description',
+    timeKey: 'notifications.message.meeting.time',
     read: true,
     type: 'info',
   },
@@ -78,6 +93,7 @@ const typeColorMap = {
 }
 
 export function NotificationPanel() {
+  const { t } = useI18n()
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>(mockMessages)
 
@@ -94,7 +110,7 @@ export function NotificationPanel() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative" aria-label="消息通知">
+        <Button variant="ghost" size="icon" className="relative" aria-label={t('notifications.trigger')}>
           <Bell className="h-5 w-5" />
           {unreadCount > 0 && (
             <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-bold text-destructive-foreground">
@@ -107,16 +123,16 @@ export function NotificationPanel() {
         <SheetHeader className="border-b px-6 py-4">
           <div className="flex items-center justify-between">
             <SheetTitle className="flex items-center gap-2">
-              消息通知
+              {t('notifications.title')}
               {unreadCount > 0 && (
                 <Badge variant="destructive" className="text-xs">
-                  {unreadCount} 条未读
+                  {unreadCount} {t('notifications.unreadCount')}
                 </Badge>
               )}
             </SheetTitle>
             {unreadCount > 0 && (
               <Button variant="ghost" size="sm" className="text-xs" onClick={markAllRead}>
-                全部已读
+                {t('notifications.markAllRead')}
               </Button>
             )}
           </div>
@@ -125,7 +141,7 @@ export function NotificationPanel() {
           {messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
               <Bell className="mb-3 h-12 w-12 opacity-30" />
-              <p className="text-sm">暂无消息通知</p>
+              <p className="text-sm">{t('notifications.empty')}</p>
             </div>
           ) : (
             <div className="divide-y">
@@ -147,20 +163,20 @@ export function NotificationPanel() {
                           {!msg.read && (
                             <span className="mr-1.5 inline-block h-2 w-2 rounded-full bg-destructive" />
                           )}
-                          {msg.title}
+                          {t(msg.titleKey)}
                         </p>
                         <span className="flex-shrink-0 text-xs text-muted-foreground">
-                          {msg.time}
+                          {t(msg.timeKey)}
                         </span>
                       </div>
-                      <p className="mt-1 text-xs text-muted-foreground">{msg.description}</p>
+                      <p className="mt-1 text-xs text-muted-foreground">{t(msg.descriptionKey)}</p>
                     </div>
                     <Button
                       variant="ghost"
                       size="icon"
                       className="absolute top-3 right-3 h-7 w-7 opacity-0 transition-opacity group-hover:opacity-100"
                       onClick={() => deleteMessage(msg.id)}
-                      aria-label="删除消息"
+                      aria-label={t('notifications.delete')}
                     >
                       <Trash2 className="h-3.5 w-3.5 text-muted-foreground" />
                     </Button>
@@ -175,7 +191,7 @@ export function NotificationPanel() {
             <Separator />
             <div className="p-4">
               <Button variant="outline" size="sm" className="w-full text-xs">
-                查看全部消息
+                {t('notifications.viewAll')}
               </Button>
             </div>
           </>
