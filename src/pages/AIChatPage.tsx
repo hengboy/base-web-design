@@ -1,4 +1,4 @@
-import { AIChatDialog } from '@/components/demo/AIChatDialog'
+import { AIChatDialog } from '@/components/ui/ai-chat-dialog'
 
 export function AIChatPage() {
   return (

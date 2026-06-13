@@ -38,6 +38,7 @@ const largeTreeData: TreeItemData[] = [
         { id: 'components', label: 'components', children: [
           { id: 'ui', label: 'ui', children: [
             { id: 'alert', label: 'alert.tsx' },
+            { id: 'ai-chat', label: 'ai-chat-dialog.tsx' },
             { id: 'avatar', label: 'avatar.tsx' },
             { id: 'badge', label: 'badge.tsx' },
             { id: 'button', label: 'button.tsx' },
@@ -54,9 +55,6 @@ const largeTreeData: TreeItemData[] = [
             { id: 'app-header', label: 'AppHeader.tsx' },
             { id: 'app-layout', label: 'AppLayout.tsx' },
             { id: 'app-sidebar', label: 'AppSidebar.tsx' },
-          ]},
-          { id: 'demo', label: 'demo', children: [
-            { id: 'ai-chat', label: 'AIChatDialog.tsx' },
           ]},
         ]},
         { id: 'pages', label: 'pages', children: [
