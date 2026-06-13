@@ -98,7 +98,7 @@ export function FeedbackPage() {
             <Button onClick={() => toast.success('操作成功！', { className: 'toast-success' })}>成功</Button>
             <Button variant="destructive" onClick={() => toast.error('操作失败！', { className: 'toast-error' })}>错误</Button>
             <Button variant="outline" onClick={() => toast.warning('请注意！', { className: 'toast-warning' })}>警告</Button>
-            <Button variant="secondary" onClick={() => toast.info('提示信息', { className: 'toast-info' })}>信息</Button>
+            <Button variant="outline" onClick={() => toast.info('提示信息', { className: 'toast-info' })}>信息</Button>
             <Button
               variant="outline"
               onClick={() =>
